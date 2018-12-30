@@ -1,9 +1,10 @@
 import logging
+import subprocess
 import time
 
 import click
 
-import eusbip
+import eusbip.utils
 
 
 logger = logging.getLogger(__name__)
@@ -39,15 +40,18 @@ def autobind(devices):
     try:
         while True:
             for device in devices:
-                eusbip.utils.run(
-                    command=[
-                        'sudo',
-                        'usbip',
-                        'bind',
-                        '--busid', device,
-                    ],
-                    check=True,
-                )
+                try:
+                    eusbip.utils.run(
+                        args=[
+                            'sudo',
+                            'usbip',
+                            'bind',
+                            '--busid', device,
+                        ],
+                        check=True,
+                    )
+                except subprocess.CalledProcessError:
+                    pass
             time.sleep(2)
     except KeyboardInterrupt:
         click.echo('Autobind termination requested, exiting')
