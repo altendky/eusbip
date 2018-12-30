@@ -25,7 +25,6 @@ def main():
 @click.pass_context
 def daemon(context):
     command = [
-        'sudo',
         'usbipd',
     ]
 
@@ -43,7 +42,6 @@ def autobind(devices):
                 try:
                     eusbip.utils.run(
                         args=[
-                            'sudo',
                             'usbip',
                             'bind',
                             '--busid', device,
@@ -54,5 +52,30 @@ def autobind(devices):
                     pass
             time.sleep(2)
     except KeyboardInterrupt:
-        click.echo('Autobind termination requested, exiting')
+        click.echo('eusbip autobind termination requested, exiting')
+        pass
+
+
+@main.command()
+@click.option('--remote')
+@click.option('--device', 'devices', multiple=True)
+def autoattach(remote, devices):
+    try:
+        while True:
+            for device in devices:
+                try:
+                    eusbip.utils.run(
+                        args=[
+                            'usbip',
+                            'attach',
+                            '--remote', remote,
+                            '--busid', device,
+                        ],
+                        check=True,
+                    )
+                except subprocess.CalledProcessError:
+                    pass
+            time.sleep(2)
+    except KeyboardInterrupt:
+        click.echo('eusbip autoattach termination requested, exiting')
         pass

@@ -5,7 +5,7 @@ Description=USB-IP Daemon
 After=network.target
 
 [Service]
-ExecStart=/home/pi/eusbip/venv/bin/eusbip autobind --device 1-1.1.2 --device 1-1.1.3 --device 1-1.2 --device 1-1.3
+ExecStart=/home/altendky/eusbip/venv/bin/eusbip autoattach --remote 192.168.0.125 --device 1-1.1.2 --device 1-1.1.3 --device 1-1.2 --device 1-1.3
 Restart=always
 
 [Install]
