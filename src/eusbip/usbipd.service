@@ -1,0 +1,14 @@
+# /etc/systemd/system/usbipd.service
+
+[Unit]
+Description=USB-IP Daemon
+After=network.target
+
+[Service]
+ExecStart=modprobe usbip_core
+ExecStart=modprobe usbip_host
+ExecStart=/usr/local/sbin/usbipd
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
