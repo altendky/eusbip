@@ -1,4 +1,5 @@
 import logging
+import time
 
 import click
 
@@ -30,3 +31,24 @@ def daemon(context):
     command += context.args
 
     return eusbip.utils.run(command)
+
+
+@main.command()
+@click.option('--device', 'devices', multiple=True)
+def autobind(devices):
+    try:
+        while True:
+            for device in devices:
+                eusbip.utils.run(
+                    command=[
+                        'sudo',
+                        'usbip',
+                        'bind',
+                        '--busid', device,
+                    ],
+                    check=True,
+                )
+            time.sleep(2)
+    except KeyboardInterrupt:
+        click.echo('Autobind termination requested, exiting')
+        pass
