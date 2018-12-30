@@ -3,6 +3,8 @@ eusbip
 
 |PyPI| |Pythons| |Travis| |GitHub|
 
+Ease working with usbip.
+
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/eusbip.svg
    :alt: PyPI version
