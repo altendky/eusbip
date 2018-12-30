@@ -1,11 +1,11 @@
-# /etc/systemd/system/usbipd.service
+# /etc/systemd/system/eusbip_autobind.service
 
 [Unit]
 Description=USB-IP Daemon
 After=network.target
 
 [Service]
-ExecStart=/usr/local/sbin/usbipd
+ExecStart=/home/pi/eusbip/venv/bin/eusbip autobind --device 1-1.1.2
 Restart=always
 
 [Install]
